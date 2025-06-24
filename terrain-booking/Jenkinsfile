@@ -23,14 +23,10 @@ pipeline {
 
     post {
         success {
-            mail to: 'srengty@gmail.com',
-                 subject: "Build Successful: ${env.JOB_NAME}",
-                 body: "Build #${env.BUILD_NUMBER} of ${env.JOB_NAME} completed successfully."
+            echo "✅ Build #${env.BUILD_NUMBER} of ${env.JOB_NAME} completed successfully."
         }
         failure {
-            mail to: 'srengty@gmail.com',
-                 subject: "Build Failed: ${env.JOB_NAME}",
-                 body: "Build #${env.BUILD_NUMBER} of ${env.JOB_NAME} failed. Please check."
+            echo "❌ Build #${env.BUILD_NUMBER} of ${env.JOB_NAME} failed. Please check the logs."
         }
     }
 }
