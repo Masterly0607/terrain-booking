@@ -1,22 +1,37 @@
 pipeline {
     agent any
 
+    environment {
+        // Make sure Jenkins can find composer and npm
+        PATH = "/usr/local/bin:/Users/sokmasterly/.config/herd-lite/bin:$PATH"
+    }
+
     stages {
         stage('Install PHP Dependencies') {
             steps {
-                sh 'composer install'
+                dir('terrain-booking') {
+                    sh 'composer install'
+                }
             }
         }
 
         stage('Install NPM Dependencies') {
             steps {
-                sh 'npm install'
+                dir('terrain-booking') {
+                    sh 'npm install'
+                }
             }
         }
 
         stage('Run Tests') {
             steps {
-                sh 'php artisan test'
+                dir('terrain-booking') {
+                    sh '''
+                        cp .env.jenkins .env
+                        php artisan key:generate
+                        php artisan test
+                    '''
+                }
             }
         }
     }

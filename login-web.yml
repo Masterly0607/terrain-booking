@@ -1,0 +1,5 @@
+- name: Login to Laravel Web Server Pod
+  hosts: localhost
+  tasks:
+    - name: Execute into web container
+      command: kubectl exec -it terrain-deployment-6fbf675459-98mpg -c web -- /bin/bash
